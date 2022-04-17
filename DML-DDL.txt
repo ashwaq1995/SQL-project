@@ -1,0 +1,140 @@
+-- Ashwaq Alharbi (SQL project)
+
+-- create database store;
+
+
+USE store;
+CREATE TABLE countries (
+    code INT NOT NULL PRIMARY KEY,
+    name VARCHAR(20) NOT NULL UNIQUE,
+    continent_name VARCHAR(20) NOT NULL UNIQUE
+);
+
+
+
+# ADD
+insert into countries values ('1','Sali','Sal');
+insert into countries values ('2','Dalal','Da');
+insert into countries values ('3','Omar','Om');
+insert into countries values ('4','Ghadah','Gh');
+insert into countries values ('5','Tsneem','Ts');
+
+
+# update
+-- update countries set name='Rana' where code='2';
+
+-- show columns from countries;
+-- select * from countries;
+
+
+USE store;
+CREATE TABLE users (
+    id INT NOT NULL PRIMARY KEY,
+    full_name VARCHAR(20) NOT NULL,
+    email VARCHAR(20) UNIQUE,
+    gender CHAR(1) CHECK (gender = 'm' OR gender = 'f'),
+    date_of_birth VARCHAR(15),
+    created_at DATETIME,
+    country_code INT UNIQUE,
+    FOREIGN KEY (country_code)
+        REFERENCES countries (code)
+);
+
+
+
+# ADD
+insert into users values ('1','Sali Ahmed','sa@sa.com','f','1999-04-01', '00-00-00', '2529582');
+insert into users values ('2','Ahmed Ali','ah@ah.com','m','1999-07-02', '00-00-00', '345');
+insert into users values ('3','Dalal Yassir','da@da.com','f','1999-04-04', '00-00-00', '46574');
+insert into users values ('4','Omer Rami','om@om.com','m','1999-07-01', '00-00-00', '45789');
+insert into users values ('5','Ghadeer mohammed','gh@gh.com','f','1996-09-01', '00-00-00', '235345');
+insert into users values ('6','Tsneem Sami','ts@ts.com','f','1994-12-10', '00-00-00', '6786');
+
+
+-- show columns from users;
+-- select * from users;
+
+
+USE store;
+CREATE TABLE orders (
+    id INT NOT NULL PRIMARY KEY,
+    user_id INT UNIQUE,
+    status VARCHAR(6) CHECK (status = 'start' OR status = 'finish'),
+    created_at DATETIME,
+    FOREIGN KEY (user_id)
+        REFERENCES users (id)
+);
+
+
+
+# ADD
+insert into orders values ('1','23','start','00-00-00');
+insert into orders values ('10','17','start','00-00-00');
+insert into orders values ('2','678','start','00-00-00');
+insert into orders values ('56','334','finish','00-00-00');
+insert into orders values ('43','2324','finish','00-00-00');
+insert into orders values ('3','667','start','00-00-00');
+*/
+
+-- show columns from orders;
+-- select * from orders;
+
+
+
+USE store;
+CREATE TABLE order_products (
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT DEFAULT 0,
+    PRIMARY KEY (order_id , product_id),
+    FOREIGN KEY (order_id)
+        REFERENCES orders (id),
+    FOREIGN KEY (product_id)
+        REFERENCES products (id)
+);
+
+
+
+# ADD
+insert into order_products values ('1','23','10');
+insert into order_products values ('2','24','100');
+insert into order_products values ('3','26','50');
+insert into order_products values ('4','29','60');
+
+
+-- show columns from order_products;
+-- select * from order_products;
+
+
+
+USE store;
+CREATE TABLE products (
+    id INT NOT NULL PRIMARY KEY,
+    name VARCHAR(10) NOT NULL,
+    price INT DEFAULT 0,
+    status VARCHAR(10) CHECK (status = 'valid' OR status = 'expired'),
+    created_at datetime default current_timestamp
+);
+
+
+/*
+# ADD
+insert into products values ('1','Sara','6786','valid','');
+insert into products values ('2','Reem','4678', 'valid', '');
+insert into products values ('3','Khalid','686', 'expired', '');
+insert into products values ('4','Ali','67786', 'valid', '');
+insert into products values ('5','Ammar','086', 'valid', '');
+insert into products values ('6','Salwa','346', 'expired', '');
+insert into products values ('7','Salwa','346', 'expired');
+insert into products values ('8','Sa','346', 'expired','');
+*/
+
+# DELETE
+-- delete from products where id='3';
+
+-- show columns from products;
+-- select * from products;
+
+
+
+
